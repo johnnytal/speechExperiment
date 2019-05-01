@@ -34,6 +34,7 @@
 		<plugin name="cordova-plugin-statusbar" spec="*"/>
 		<plugin name="cordova-plugin-extension" spec="*"/>
 		<plugin name="cordova-plugin-whitelist" version="1"/>
+		<plugin name="cordova-plugin-audioinput" version="1"/>
 
 		<icon src="512x512.png" />
 		
