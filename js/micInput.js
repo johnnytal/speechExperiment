@@ -40,7 +40,7 @@ function webaudio_tooling_obj () {
     largestFreq = 0;
     averageValue = 0;
 
-    WebMidi.enable(function (err){}); 
+    /*WebMidi.enable(function (err){}); 
 
     setTimeout(function(){
     	
@@ -49,7 +49,7 @@ function webaudio_tooling_obj () {
 		output = WebMidi.getOutputByName('Scarlett 6i6 USB');
 		
 		handleMidi();
-	}, 1000);
+	}, 1000);*/
 
     var colors = [
 		'#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00', '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40',

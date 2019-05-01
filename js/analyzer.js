@@ -37,14 +37,14 @@ colorMain.prototype = {
 			textPhysics = game.add.text(500, 1200, '', {font: '1px'});
 			game.physics.arcade.enable(textPhysics);
 
-			capture();
+			//capture();
 			webaudio_tooling_obj();
 		}, 500);
    },
    update: function(){
-   	 if (game.physics.arcade.collide(meter, meters, collisionHandler, processHandler, this)){
+   	 /*if (game.physics.arcade.collide(meter, meters, collisionHandler, processHandler, this)){
         console.log('boom');
-     }
+     }*/
    }
 };
 
