@@ -74,7 +74,7 @@ function webaudio_tooling_obj () {
               start_microphone(stream);
           },
           function(e) {
-            alert('Error capturing audio.');
+            alert(e);
           }
         );
 
