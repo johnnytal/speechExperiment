@@ -36,7 +36,6 @@
 		<plugin name="cordova-plugin-whitelist" version="1"/>
 		<plugin name="cordova-plugin-audioinput" version="*"/>
 		<plugin name="cordova-plugin-media" version="*"/>
-		<plugin name="cordova-plugin-android-volume" spec="*"/>
 
 		<icon src="512x512.png" />
 		

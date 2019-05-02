@@ -43,7 +43,7 @@ function webaudio_tooling_obj () {
 
 	      microphone_stream.connect(script_processor_node);
 	
-	      gain_node.gain.value = 1;
+	      gain_node.gain.value = 0;
 	
 	      script_processor_fft_node = audioContext.createScriptProcessor(2048, 1, 1);
 	      script_processor_fft_node.connect(gain_node);
@@ -58,54 +58,56 @@ function webaudio_tooling_obj () {
 	      analyserNode.connect(script_processor_fft_node);
 	
 	      script_processor_fft_node.onaudioprocess = function() {
-	      	 var array = new Uint8Array(analyserNode.frequencyBinCount);
-	      	 analyserNode.getByteFrequencyData(array);
-
-             for (var i = 0; i < AMOUNT; i++) {
-            	 averageValue += array[i];
-             }
-             averageValue = averageValue / AMOUNT;
-             
-             largestValue = Math.max.apply(null, array);
-            
-             largestFreq = array.indexOf(largestValue);
-
-			 dominance = largestValue / averageValue;
-
-             var value = array[i];
-
-             value = value < 1 ? 1 : value;
-             
-             for (var i = 0; i < AMOUNT; i++) {
-             	 var meter = metersArray[i];
-             	 
-             	 if (i != largestFreq){
-             	 	game.add.tween(meter.scale).to( { x: .7, y: .7}, 1000, "Linear", true);
-             	 	game.add.tween(meter).to( { alpha: 0.1}, 800, "Linear", true);
-             	 }  
-            	 
-            	 else{
-	 				 try{
-					 	//meter.tint = value * (largestFreq + 1) * -100;
-		 	      		game.add.tween(meter).to( { alpha: 1}, 50, "Linear", true);
-		      		 	game.add.tween(meter.scale).to( { x: 1, y: Math.pow(value, 0.25)}, 300, "Linear", true);
-		      		 } catch(e){}
-            	 }
-             };
-
-      	 	 red = Math.round(255 - dominance * 20);
-      	 	 if (red > 254) red = 254;
-      	 	 else if (red < 1) red = 1;
-
-      	 	 green = Math.round(largestValue / dominance);
-      	 	 if (green > 200) green = 200;
-      	 	 else if (green < 1) green = 1;
-
-      	 	 blue = Math.round(averageValue * dominance);
-      	 	 if (blue > 200) blue = 200;
-	  	 	 else if (blue < 1) blue = 1;
-
-      	 	 game.stage.backgroundColor = 'rgb(' + 0 + ', ' + 40 + ',' + blue + ')';
+	         if (!gameEnded){
+		      	 var array = new Uint8Array(analyserNode.frequencyBinCount);
+		      	 analyserNode.getByteFrequencyData(array);
+	
+	             for (var i = 0; i < AMOUNT; i++) {
+	            	 averageValue += array[i];
+	             }
+	             averageValue = averageValue / AMOUNT;
+	             
+	             largestValue = Math.max.apply(null, array);
+	            
+	             largestFreq = array.indexOf(largestValue);
+	
+				 dominance = largestValue / averageValue;
+	
+	             var value = array[i];
+	
+	             value = value < 1 ? 1 : value;
+	             
+	             for (var i = 0; i < AMOUNT; i++) {
+	             	 var meter = metersArray[i];
+	             	 
+	             	 if (i != largestFreq - 3){
+	             	 	game.add.tween(meter.scale).to( { x: .7, y: .7}, 1000, "Linear", true);
+	             	 	game.add.tween(meter).to( { alpha: 0.1}, 800, "Linear", true);
+	             	 }  
+	            	 
+	            	 else{
+		 				 try{
+						 	meter.tint = value * -150;
+			 	      		game.add.tween(meter).to( { alpha: 1}, 50, "Linear", true);
+			      		 	game.add.tween(meter.scale).to( { x: 1, y: Math.pow(value, 0.25)}, 300, "Linear", true);
+			      		 } catch(e){}
+	            	 }
+	             };
+	
+	      	 	 red = Math.round(255 - dominance * 20);
+	      	 	 if (red > 254) red = 254;
+	      	 	 else if (red < 1) red = 1;
+	
+	      	 	 green = Math.round(largestValue / dominance);
+	      	 	 if (green > 200) green = 200;
+	      	 	 else if (green < 1) green = 1;
+	
+	      	 	 blue = Math.round(averageValue * dominance);
+	      	 	 if (blue > 200) blue = 200;
+		  	 	 else if (blue < 1) blue = 1;
+	
+	      	 	 game.stage.backgroundColor = 'rgb(' + 0 + ', ' + 40 + ',' + blue + ')';
+      	 	 }
          };
      }
 }
