@@ -18,7 +18,6 @@ var boot = function(game){};
   
 boot.prototype = {
     create: function(){
-    	
     	game.stage.backgroundColor = '#fff';
     	
         if (this.game.device.desktop){
