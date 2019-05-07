@@ -9,8 +9,7 @@ function webaudio_tooling_obj () {
     largestFreq = 0;
     averageValue = 0;
 
-    var audioInput = null,
-        microphone_stream = null,
+     var microphone_stream = null,
         gain_node = null,
         script_processor_node = null,
         script_processor_fft_node = null,
@@ -94,19 +93,11 @@ function webaudio_tooling_obj () {
 	            	 }
 	             };
 	
-	      	 	 red = Math.round(255 - dominance * 20);
-	      	 	 if (red > 254) red = 254;
-	      	 	 else if (red < 1) red = 1;
-	
-	      	 	 green = Math.round(largestValue / dominance);
-	      	 	 if (green > 200) green = 200;
-	      	 	 else if (green < 1) green = 1;
-	
 	      	 	 blue = Math.round(averageValue * dominance);
-	      	 	 if (blue > 200) blue = 200;
-		  	 	 else if (blue < 1) blue = 1;
+	      	 	 if (blue > 200) blue = 215;
+		  	 	 else if (blue < 0) blue = 0;
 	
-	      	 	 game.stage.backgroundColor = 'rgb(' + 0 + ', ' + 40 + ',' + blue + ')';
+	      	 	 game.stage.backgroundColor = 'rgba(' + 10 + ', ' + 60 + ',' + blue + ',' + 0.9 + ')';
       	 	 }
          };
      }

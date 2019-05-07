@@ -13,6 +13,9 @@ colorMain.prototype = {
 		metersArray = [];
 		score = 0;	
 		gameEnded = false;
+		
+		bg = game.add.image(0, 0, 'bg');
+		bg.alpha = 0.4;
 			
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		
@@ -75,6 +78,8 @@ colorMain.prototype = {
 	   else{
 	   	 if (game.input.activePointer.isDown){
 	   	 	game.state.start("Preloader"); 
+	   	 	
+	   	 	if(AdMob) AdMob.showInterstitial();
 	   	 }
 	   }
    }
@@ -137,6 +142,17 @@ function checkOverlap(spriteA, spriteB) {
 function initPlugIns(){
     try{window.plugins.insomnia.keepAwake();} catch(e){} // keep device awake
     try{StatusBar.hide();} catch(e){} // hide status bar
+    
+    try{
+	    admobid = {
+	        interstitial: 'ca-app-pub-9795366520625065/7944209795',
+	    };
+	  	
+	  	if(AdMob) AdMob.prepareInterstitial({
+	  		adId: admobid.interstitial, 
+	  		autoShow: false
+	  	}); 
+  	}catch(e){}
 }
 
 function timerStuff(){
