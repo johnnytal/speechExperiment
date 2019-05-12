@@ -33,6 +33,7 @@
 		<plugin name="cordova-plugin-insomnia" spec="*"/>
 		<plugin name="cordova-plugin-statusbar" spec="*"/>
 		<plugin name="cordova-plugin-extension" spec="*"/>
+		<plugin name="cordova-plugin-android-permissions" spec="*"/>
 		<plugin name="cordova-plugin-whitelist" version="1"/>
 		<plugin name="cordova-plugin-audioinput" version="*"/>
 		<plugin name="cordova-plugin-media" version="*"/>

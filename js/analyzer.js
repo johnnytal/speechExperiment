@@ -14,6 +14,10 @@ colorMain.prototype = {
 		score = 0;	
 		gameEnded = false;
 		
+		try{
+			cordova.plugins.permissions.requestPermission(permission.RECORD_AUDIO, success, error);
+		}catch(e){error();}
+		
 		bg = game.add.image(0, 0, 'bg');
 		bg.alpha = 0.4;
 			
@@ -200,4 +204,13 @@ function endGame(){
     endLabel.y =  HEIGHT / 2 - endLabel.height / 2;
     
     gameEnded = true;
+}
+
+
+function error() {
+  alert('Mic permission is not turned on');
+}
+
+function success( status ) {
+
 }
