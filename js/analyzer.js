@@ -10,13 +10,17 @@ var colorMain = function(game){
 
 colorMain.prototype = {
     create: function(){ 
+	    try{
+			window.audioinput.checkMicrophonePermission(function(hasPermission) {
+			    if (!hasPermission) {
+			        window.audioinput.getMicrophonePermission(function(hasPermission, message) {});
+			    }
+			});
+		} catch(e){}
+	
 		metersArray = [];
 		score = 0;	
 		gameEnded = false;
-		
-		try{
-			cordova.plugins.permissions.requestPermission(permission.RECORD_AUDIO, success, error);
-		}catch(e){error();}
 		
 		bg = game.add.image(0, 0, 'bg');
 		bg.alpha = 0.4;
@@ -80,11 +84,10 @@ colorMain.prototype = {
 		   });
 	   }
 	   else{
-	   	 if (game.input.activePointer.isDown){
-	   	 	game.state.start("Preloader"); 
-	   	 	
-	   	 	if(AdMob) AdMob.showInterstitial();
-	   	 }
+	       if(game.input.activePointer.isDown){
+	   	 	   game.state.start("Preloader"); 
+	   	       if(AdMob) AdMob.showInterstitial();
+	   	   }
 	   }
    }
 };
@@ -144,21 +147,11 @@ function checkOverlap(spriteA, spriteB) {
 }
 
 function initPlugIns(){
-    try{
-		window.audioinput.checkMicrophonePermission(function(hasPermission) {
-		    if (!hasPermission) {
-		        window.audioinput.getMicrophonePermission(function(hasPermission, message) {});
-		    }
-		});
-	} catch(e){}
-	
     try{window.plugins.insomnia.keepAwake();} catch(e){} // keep device awake
     try{StatusBar.hide();} catch(e){} // hide status bar
 
     try{
-	    admobid = {
-	        interstitial: 'ca-app-pub-9795366520625065/7944209795',
-	    };
+	    admobid = {interstitial: 'ca-app-pub-9795366520625065/7944209795'};
 	  	
 	  	if(AdMob) AdMob.prepareInterstitial({
 	  		adId: admobid.interstitial, 
@@ -212,13 +205,4 @@ function endGame(){
     endLabel.y =  HEIGHT / 2 - endLabel.height / 2;
     
     gameEnded = true;
-}
-
-
-function error() {
-  alert('Mic permission is not turned on');
-}
-
-function success( status ) {
-
 }

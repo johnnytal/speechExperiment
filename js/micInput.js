@@ -15,20 +15,20 @@ function webaudio_tooling_obj () {
         script_processor_fft_node = null,
         analyserNode = null;
 
-    if (!navigator.getUserMedia)
-            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    if (!navigator.getUserMedia){
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    }
 
     if (navigator.getUserMedia){
         navigator.getUserMedia({audio:true}, 
-          function(stream) {
-              start_microphone(stream);
-          },
-          function(e) {
-            alert("Please allow Microphone access through Setting > Apps");
-          }
+            function(stream) {
+                start_microphone(stream);
+            },
+            function(e) {
+                alert(e);
+            }
         );
-
     } else { alert('getUserMedia not supported in this browser'); }
 
      function start_microphone(stream){
