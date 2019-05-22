@@ -34,11 +34,11 @@ colorMain.prototype = {
 		
 		biteSfx = game.add.audio('bite', 1);
 		
-		scoreText = game.add.text(40, 20, 'Score: ' + score, {font: '128px', fill: 'yellow', align:'center', fontWeight:'bold'});		
-		plusText = game.add.text(20, 20, '', {font: '128px', fill: 'white', align:'center', fontWeight:'bold'});		
+		scoreText = game.add.text(40, 25, 'Score: ' + score, {font: '128px', fill: 'yellow', align:'center', fontWeight:'bold'});		
+		plusText = game.add.text(20, 25, '', {font: '128px', fill: 'white', align:'center', fontWeight:'bold'});		
 		
-		timeLabel = game.add.text(20, 20, 'Time: ' + TIME, {font: '128px', fill: 'white', align:'center', fontWeight:'bold'});		
-		timeLabel.x = WIDTH - 40 - timeLabel.width;
+		timeLabel = game.add.text(20, 25, 'Time: ' + TIME, {font: '128px', fill: 'white', align:'center', fontWeight:'bold'});		
+		timeLabel.x = WIDTH - 25 - timeLabel.width;
 		
         bestScore = localStorage.getItem("analyzer-bestScore");
         if (bestScore == null) bestScore = 0;
@@ -60,9 +60,9 @@ colorMain.prototype = {
 		}
 
 		setTimeout(function(){
+			initPlugIns();
 			webaudio_tooling_obj();
 			createFruits();
-			initPlugIns();
 		}, 500);	
 		
 		timerStuff();
@@ -144,9 +144,17 @@ function checkOverlap(spriteA, spriteB) {
 }
 
 function initPlugIns(){
+    try{
+		window.audioinput.checkMicrophonePermission(function(hasPermission) {
+		    if (!hasPermission) {
+		        window.audioinput.getMicrophonePermission(function(hasPermission, message) {});
+		    }
+		});
+	} catch(e){}
+	
     try{window.plugins.insomnia.keepAwake();} catch(e){} // keep device awake
     try{StatusBar.hide();} catch(e){} // hide status bar
-    
+
     try{
 	    admobid = {
 	        interstitial: 'ca-app-pub-9795366520625065/7944209795',

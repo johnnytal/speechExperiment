@@ -25,11 +25,11 @@ function webaudio_tooling_obj () {
               start_microphone(stream);
           },
           function(e) {
-            alert(e);
+            alert("Please allow Microphone access through Setting > Apps");
           }
         );
 
-    } else { alert('getUserMedia not supported in this browser.'); }
+    } else { alert('getUserMedia not supported in this browser'); }
 
      function start_microphone(stream){
 	      gain_node = audioContext.createGain();
