@@ -12,11 +12,27 @@ colorMain.prototype = {
     create: function(){ 
 	    try{
 			window.audioinput.checkMicrophonePermission(function(hasPermission) {
-			    if (!hasPermission) {
-			        window.audioinput.getMicrophonePermission(function(hasPermission, message) {});
+				if (hasPermission){
+					createFruits();
+					webaudio_tooling_obj();
+					timerStuff();
+				}
+			    else{
+			        window.audioinput.getMicrophonePermission(function(hasPermission, message) {
+			        	if (hasPermission) {
+							createFruits();
+							webaudio_tooling_obj();		
+							timerStuff();
+			        	}
+			        	else{
+			        		alert('Permission needed for app to work...');
+			        	}
+			        });
 			    }
 			});
-		} catch(e){}
+		} catch(e){
+			alert('Please give microphone permission via Settings > Apps');
+		}
 	
 		metersArray = [];
 		score = 0;	
@@ -63,13 +79,7 @@ colorMain.prototype = {
 			metersArray.push(meter);
 		}
 
-		setTimeout(function(){
-			initPlugIns();
-			webaudio_tooling_obj();
-			createFruits();
-		}, 500);	
-		
-		timerStuff();
+		initPlugIns();
    },
    update: function(){
 	   	if (!gameEnded){
@@ -85,8 +95,11 @@ colorMain.prototype = {
 	   }
 	   else{
 	       if(game.input.activePointer.isDown){
-	   	 	   game.state.start("Preloader"); 
-	   	       if(AdMob) AdMob.showInterstitial();
+	       	   if(AdMob) AdMob.showInterstitial();
+	       	   
+	       	   setTimeout(function(){
+	       	   	   game.state.start("Preloader"); 
+	       	   }, 2000);  
 	   	   }
 	   }
    }
